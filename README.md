@@ -1,9 +1,11 @@
-GERENCIE.se
+Intranet Labbo
 =======
 
-[![Gerenciese](http://www.possamai.net.br/logo.png)](http://www.gerencie.se)
+[![Intranet](http://desenvolvimentodeintranet.com.br/novo/img/logo.png)](http://www.desenvolvimentodeintranet.com.br/)
 
 Projeto em desenvolvimento.
+
+Proíbida reprodução sem autorização.
 
 
 
