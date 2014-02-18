@@ -40,7 +40,7 @@ $(document).ready(function(){
             }
         });
         
-        if (!validate) { dialog('Erro', 'Favor verificar os campos inválidos.') };
+        if (!validate) { dialog('Erro', 'Favor verificar os campos inválidos.'); };
         return validate;
     });
             

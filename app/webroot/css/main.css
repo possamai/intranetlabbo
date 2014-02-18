@@ -2522,8 +2522,8 @@ label.error {
     font-size:11px;
  }
 
-form input.error, form select.error {border: 1px solid #ED7A53 !important;}
-form input.valid, form select.valid {border: 1px solid #9FC569 !important;}
+form input.error, form select.error, form div.error {border: 1px solid #ED7A53 !important;}
+form input.valid, form select.valid, form div.valid {border: 1px solid #9FC569 !important;}
 
 .controls .checker label.error {
 	min-width: 260px;

@@ -188,7 +188,9 @@
  *
  */
 	Configure::write('Session', array(
-		'defaults' => 'php'
+		'defaults' => 'php',
+        'cookieTimeout' => 0,   //Lives until the browser is closed.
+        'checkAgent'  => false  //To fix a little the Chrome Frame problem
 	));
 
 /**
