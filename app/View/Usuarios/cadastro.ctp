@@ -159,6 +159,67 @@ $this->Html->addCrumb( $this_page );
                         
                         </div>
                     </div>
+                    
+                    
+                    <div class="form-row row-fluid">
+                        <div class="span12">
+                        
+                            <div class="row-fluid">
+                                <label class="form-label span3">Endereços:</label>
+                                <?PHP
+                                echo $this->Html->link( '<i class="icon-file"></i> Novo Endereço', 'javascript:;',
+                                            array('title'=>'Iniciar novo cadastro', 'class'=>'btn tip', 'id'=>'bt_endereco', 'escape' => false)
+                                );
+                                ?>                                
+                                <div id="lista_enderecos" class="span8 controls lista_opcoes_checkbox">
+                                <?PHP
+                                if (count($this->data['Endereco'])>0){
+                                    foreach($this->data['Endereco'] as $key => $obj_endereco) {
+                                        echo '                                        
+                                        <div>
+                                            <div class="span12">'. $this->Html->link( '<i class="icon-trash"></i> Remover', 'javascript:;', array('title'=>'Iniciar novo cadastro', 'class'=>'right btn btn-mini btn-danger tip bt_remover_endereco', 'escape' => false)) .'</div>
+                                            <input type="hidden" name="data[Endereco]['. $key .'][id]" value="'. $obj_endereco['id'] .'">
+                                            <div class="span12">
+                                                <div class="row-fluid">
+                                                    <label class="form-label span3" for="EnderecoTipo">Tipo</label>
+                                                    <select name="data[Endereco]['. $key .'][tipo_endereco_id]" id="EnderecoTipo" class="span9">
+                                        ';
+                                                        foreach($tipos_enderecos as $id => $tipo) {
+                                                            echo '<option value ="'. $id .'" '. (($obj_endereco['tipo_endereco_id']==$id)?'selected="selected"':'') .'>'. $tipo .'</option>';
+                                                        }
+                                        echo '
+                                                    </select>
+                                                </div>
+                                            </div>                                        
+                                            <div class="span12">'. $this->Form->input('Endereco.'. $key .'.titulo') .'</div>                                        
+                                            <div class="span12">'. $this->Form->input('Endereco.'. $key .'.cep', array('class'=>'cep span4')) . '</div>
+                                            <div class="span12">'. $this->Form->input('Endereco.'. $key .'.endereco') . '</div>                                        
+                                            <div class="span12">'. $this->Form->input('Endereco.'. $key .'.complemento') . '</div>                                        
+                                            <div class="span12">'. $this->Form->input('Endereco.'. $key .'.numero') . '</div>                                        
+                                            <div class="span12">'. $this->Form->input('Endereco.'. $key .'.bairro') . '</div>                                        
+                                            <div class="span12">'. $this->Form->input('Endereco.'. $key .'.cidade') . '</div>                                    
+                                            <div class="span12">
+                                                <div class="row-fluid">
+                                                    <label class="form-label span3" for="EnderecoEstado">Estado</label>
+                                                    '.  $this->Estados->select('Endereco.'. $key .'.estado', $obj_endereco['estado'], array('class'=>'span9')) . '
+                                                </div>
+                                            </div>
+                                        </div>
+                                        ';
+                                    }
+                                    //debug( $this->data['Opcao'] );                                            
+                                }
+                                ?>                                                                
+                                </div>
+                            </div>
+                        
+                        </div>
+                    </div>
+                    
+                    
+                    
+                    
+                    
                     <script type="text/javascript">
                     $(document).ready(function(){
                         $('.lista_opcoes_checkbox > input.input_filter').keyup(function(){
@@ -177,6 +238,70 @@ $this->Html->addCrumb( $this_page );
                                 $(this).val('');
                                 dialog('Erro', 'Formato inválido<br />Extensões aceitas: '+ _validFileExtensions.join(', '));
                             }
+                        });
+                        
+                        
+                        $( "input.cep" ).unbind('change');
+                        $('.bt_remover_endereco').live('click',function(){
+                            $(this).parent('div').parent('div').remove();
+                        });
+                        $('#bt_endereco').click(function(){
+                            var line = $('div#lista_enderecos > div').length;
+                            
+                            var field = '<div class="endereco_usuario">\
+                                    <div class="span12"><?PHP echo $this->Html->link( '<i class="icon-trash"></i> Remover', 'javascript:;', array('title'=>'Iniciar novo cadastro', 'class'=>'right btn btn-mini btn-danger tip bt_remover_endereco', 'escape' => false)); ?></div>\
+                                    <div class="span12">\
+                                        <div class="row-fluid">\
+                                            <label class="form-label span3" for="EnderecoTipo">Tipo</label>\
+                                            <select name="data[Endereco][9999][tipo_endereco_id]" id="EnderecoTipo" class="span9">\
+                                                <?PHP
+                                                foreach($tipos_enderecos as $id => $tipo) {
+                                                    echo '<option value ="'. $id .'">'. $tipo .'</option>';
+                                                }
+                                                ?>
+                                            </select>\
+                                        </div>\
+                                    </div>\
+                                    <div class="span12"><?PHP echo $this->Form->input('Endereco.9999.titulo'); ?></div>\
+                                    <div class="span12"><?PHP echo $this->Form->input('Endereco.9999.cep', array('class'=>'cep span4')); ?></div>\
+                                    <div class="span12"><?PHP echo $this->Form->input('Endereco.9999.endereco'); ?></div>\
+                                    <div class="span12"><?PHP echo $this->Form->input('Endereco.9999.complemento'); ?></div>\
+                                    <div class="span12"><?PHP echo $this->Form->input('Endereco.9999.numero'); ?></div>\
+                                    <div class="span12"><?PHP echo $this->Form->input('Endereco.9999.bairro'); ?></div>\
+                                    <div class="span12"><?PHP echo $this->Form->input('Endereco.9999.cidade'); ?></div>\
+                                    <div class="span12">\
+                                        <div class="row-fluid">\
+                                            <label class="form-label span3" for="EnderecoEstado">Estado</label>\
+                                            <?PHP
+                                            $content =  $this->Estados->select('Endereco.9999.estado', 'SC', array('class'=>'span9'));
+                                            echo str_replace("\n", '', $content);
+                                            ?>
+                                        </div>\
+                                    </div>\
+                                </div>\
+                            </div>\
+                            ';
+                            
+                            $('div#lista_enderecos').append( field.replace(/9999/g, line) );
+                            
+                            
+                            $( "input.cep:last-child" )
+                                .mask("99999-999")
+                                .change(function(){
+                                    if ($(this).val() != "") {
+                                        var name_search = $(this).attr('name').replace('[cep]','');
+                            			endereco = buscaEndereco( $(this).val() );
+                                        if (endereco) {                    
+                                            $(this).closest('div.endereco_usuario').find( 'input[name="'+ name_search + '[endereco]"]' ).val( endereco.logradouro );
+                                            $(this).closest('div.endereco_usuario').find( 'input[name="'+ name_search + '[bairro]"]' ).val( endereco.bairro );
+                                            $(this).closest('div.endereco_usuario').find( 'input[name="'+ name_search + '[cidade]"]' ).val( endereco.cidade );
+                                            $(this).closest('div.endereco_usuario').find( 'select[name="'+ name_search + '[estado]"]' ).val( endereco.uf );
+                                        } else {
+                                            dialog('Erro', 'Não foi possível localizar este CEP em nosso sistema.');
+                                        }	
+                            		}	
+                                });
+                            
                         });
                     });
                     </script>     

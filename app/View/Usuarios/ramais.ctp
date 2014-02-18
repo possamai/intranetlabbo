@@ -50,7 +50,7 @@ $this->Html->addCrumb( $title_for_layout, $base_url  );
                     
         <?php foreach ($usuarios as $usuario): ?>
 	<tr>
-		<td style="text-align: center;">
+		<td style="text-align: center; min-width: 70px;">
             <?php
             $img = (($usuario['Usuario']['foto']<>'')?'/files/usuario/foto/'.$usuario['Usuario']['foto']:'/img/logo.png');
             echo $this->Timthumb->image($img, array('width' => 50, 'height' => 50, 'zoom_crop'=> 2), array('class'=>'image'));

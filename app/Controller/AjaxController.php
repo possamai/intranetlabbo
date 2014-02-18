@@ -24,11 +24,15 @@ class AjaxController extends AppController {
 
 
 	public function buscaCep() {
-		$param = $this->request->data;        
-        parse_str( file_get_contents("http://cep.republicavirtual.com.br/web_cep.php?formato=query_string&cep=". $param['cep']), $arr_retorno);
-        foreach($arr_retorno as $key=>$val) {
-            $arr_retorno[$key] = utf8_encode($arr_retorno[$key]);
-        }
-        echo json_encode($arr_retorno); die;
+        $this->autoRender = false;
+		$param = $this->request->data;
+                
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "http://cep.republicavirtual.com.br/web_cep.php?formato=json&cep=". $param['cep']);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+        echo $retorno = curl_exec($ch);
+        curl_close($ch);
+        die;
+        //echo json_encode($retorno); die;
 	}
 }

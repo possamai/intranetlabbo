@@ -3,6 +3,7 @@ App::uses('AppController', 'Controller');
 class UsuariosController extends AppController {
 
  
+	var $helpers = array('CakePtbr.Estados');
     public $base_url = array('controller' => 'usuarios', 'action' => 'index');
     
     public function beforeRender() {                
@@ -101,6 +102,14 @@ class UsuariosController extends AppController {
         $_old_assinatura = (($Usuario<>null) ? $this->Usuario->getPathFile('assinatura') . $Usuario['Usuario']['assinatura'] : '');
         
     	if ($this->request->is('post') || $this->request->is('put')) {
+            // Remove endereços
+            $arr_end = array();
+            foreach ($this->request->data['Endereco'] as $endereco) {
+                if (isset($endereco['id'])) {$arr_end = $endereco['id'];}
+            }
+            $this->Usuario->Endereco->deleteAll(  array('Endereco.usuario_id =' => $Usuario['Usuario']['id'], 'NOT' => array('Endereco.id' => $arr_end)), false  );
+            
+            
             if (($this->request->data['Usuario']['password']=='')||($this->request->data['Usuario']['password']==null)) {
                 unset($this->request->data['Usuario']['password']);
             }
@@ -131,9 +140,10 @@ class UsuariosController extends AppController {
 			$this->request->data = $Usuario;
 		}
                 
+		$tipos_enderecos = $this->Usuario->Endereco->TipoEndereco->find('list');
 		$niveis = $this->Usuario->Nivel->find('list');
 		$grupos = $this->Usuario->Grupos->find('threaded');
-		$this->set(compact('grupos','niveis','path_foto', 'path_assinatura'));
+		$this->set(compact('grupos','niveis','tipos_enderecos'));
        
        
        

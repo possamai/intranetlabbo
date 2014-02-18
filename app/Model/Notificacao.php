@@ -1,5 +1,6 @@
 <?php
 App::uses('AppModel', 'Model');
+App::uses('CakeEmail', 'Network/Email');
 /**
  * Notificacao Model
  *
@@ -90,13 +91,15 @@ class Notificacao extends AppModel {
         if ( (count($arr_usuarios)>0) && ($model) && ($id_registry) && ($id_tipo_acao) ) {                          
             $arr_users = $arr_error = array();
             $id_logged = CakeSession::read("Auth.User.id");
-    
+            
+            $user = ClassRegistry::init( 'Usuario' );
+            
             /** Limpa array Ids */
             if (is_array($arr_usuarios)) {
                 foreach( $arr_usuarios as $userId ) {
                     if (!in_array($userId, $arr_users)) { $arr_users[] = $userId; }
                 }
-            }
+            }            
             
             /** Remove os antigos */
             /*$lista = $this->find('list', array('conditions'=>array(
@@ -123,7 +126,20 @@ class Notificacao extends AppModel {
                     $this->create();
                     if ( ! $this->save( $data_notificacao ) ) {
                         $arr_error[] = $this->validationErrors;
+                    } else {
+                        // Get email user
+                        $user->id = $userId;
+                        $str_email = $user->field('email');
+                        $arr_email[] = $str_email;
                     }
+                }
+                
+                if (count($arr_email)>0) {
+                    $Email = new CakeEmail();
+                    $Email->from(array('nao-responder@desenvolvimentodeintranet.com.br' => 'Não Responder'));
+                    $Email->subject('[Intranet] Novidades na intranet');
+                    $Email->bcc( $arr_email );
+                    $Email->send('Acesse agora mesmo e veja as novidades na intranet.');
                 }
             }
         } else { $arr_error[] = 'Faltam campos para cadastrar notificação.'; }
@@ -153,7 +169,9 @@ class Notificacao extends AppModel {
         foreach($lista as $key => $obj) {
             $modelo = ClassRegistry::init( $obj['Notificacao']['model_registro'] );
             $dados = $modelo->find('all', array('conditions'=>array( $obj['Notificacao']['model_registro'].'.id' =>$obj['Notificacao']['id_registro'] )) );
-            array_push( $lista[$key], $dados[0] );
+            if (count($dados)>0) {
+                array_push( $lista[$key], $dados[0] );
+            }
         }
         return $lista;
     }
