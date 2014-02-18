@@ -194,7 +194,7 @@ class UsuariosController extends AppController {
         //$this->layout = 'intranet_login';
         if ($this->request->is('post')) {            
             if ($this->Auth->login()) {
-                $this->redirect($this->Auth->redirect());
+                $this->redirect(array(  'controller' => 'dashboard', 'action' => 'index'));              
             } else {
                 $this->Session->setFlash(__('Usuário ou senha inválidos.'), 'flash_error');
             }
