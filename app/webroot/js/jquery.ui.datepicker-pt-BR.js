@@ -2,7 +2,7 @@
 /* Written by Leonildo Costa Silva (leocsilva@gmail.com). */
 jQuery(function($j){
 	$j.datepicker.regional['pt-BR'] = {
-                yearRange: "1920:2038",
+                yearRange: "1920:2024",
 		closeText: 'Fechar',
 		prevText: '&#x3c;Anterior',
 		nextText: 'Pr&oacute;ximo&#x3e;',
