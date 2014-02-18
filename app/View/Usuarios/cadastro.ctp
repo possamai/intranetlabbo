@@ -182,7 +182,7 @@ $this->Html->addCrumb( $this_page );
                     </script>     
                     
                     
-                <?PHP echo $this->element('historico_cadastro'); ?>
+                <!--<?//PHP echo $this->element('historico_cadastro'); ?>-->
                 
                 <div class="form-actions"><?PHP echo $this->element('botoes_formulario'); ?></div>
                 
