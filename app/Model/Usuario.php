@@ -180,6 +180,19 @@ class Usuario extends AppModel {
 			'exclusive' => '',
 			'finderQuery' => '',
 			'counterQuery' => ''
+		),        
+		'Endereco' => array(
+			'className' => 'Endereco',
+			'foreignKey' => 'usuario_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
 		),
         /*
 		'Comentario' => array(
@@ -301,6 +314,20 @@ class Usuario extends AppModel {
         $this->recursive = 0;
         
         $arr_conditions[] = array('WEEKOFYEAR( CONCAT( YEAR(NOW()),"-",MONTH(Usuario.data_nascimento),"-",DAY(Usuario.data_nascimento) ) ) = WEEKOFYEAR( NOW() )');
+        $arr_conditions[] = array('Usuario.status = 2');
+        
+        $lista = $this->find('all', array(
+                                    'conditions'=>array( $arr_conditions ),
+                                    'order' => array('nascimento_order' => 'ASC'),
+                                    'fields' => array('Usuario.nome', 'Usuario.email', 'Usuario.ramal', 'Usuario.data_nascimento', 'DATE_FORMAT(Usuario.data_nascimento, "%m%d") as nascimento_order'),
+        ));
+        return $lista;
+    }
+    
+    public function getAniversariantesMes() {
+        $this->recursive = 0;
+        
+        $arr_conditions[] = array('MONTH(Usuario.data_nascimento) = MONTH( NOW() )');
         $arr_conditions[] = array('Usuario.status = 2');
         
         $lista = $this->find('all', array(

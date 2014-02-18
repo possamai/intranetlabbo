@@ -54,7 +54,7 @@ class DashboardController extends AppController {
 	public function index() {
         $id_user = $this->Auth->user('id');
         $this->set('notificacoes', ClassRegistry::init('Notificacao')->getNotificacoes(array('para_id'=>$id_user)));
-        $this->set('aniversariantes', ClassRegistry::init('Usuario')->getAniversariantesSemana());
+        $this->set('aniversariantes', ClassRegistry::init('Usuario')->getAniversariantesMes());
         
 	}
         

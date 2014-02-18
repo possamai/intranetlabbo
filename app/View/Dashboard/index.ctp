@@ -26,8 +26,9 @@ $this->Html->addCrumb('<span class="icon16 icomoon-icon-screen-2"></span>', Rout
                                 
                                     <span class="blue">' . $this->Html->link( $obj['Criado']['nome'] , array('controller' => 'usuarios' , 'action' => 'perfil', $obj['Criado']['id']), array('title'=>'Perfil')) . '</span>
                                     
-                                    <span>'. $obj['TipoAcao']['titulo'] .' </span>
+                                    <span>'. $obj['TipoAcao']['titulo'] .' um </span>
                                     <span class="blue">'. $obj['Notificacao']['model_registro'] .'</span>
+                                    <span>pra você.</span>
                                     
                                     <br />
                                     <span>Nome: '. $obj[0]['Arquivo']['titulo'] .'</span>
@@ -67,7 +68,7 @@ $this->Html->addCrumb('<span class="icon16 icomoon-icon-screen-2"></span>', Rout
             <div class="title">
                 <h4>
                     <span class="icon16 icomoon-icon-gift"></span>
-                    <span>Aniversariantes da Semana</span>
+                    <span>Aniversariantes do Mês</span>
                 </h4>
             </div>
             <div class="content">
@@ -85,6 +86,8 @@ $this->Html->addCrumb('<span class="icon16 icomoon-icon-screen-2"></span>', Rout
                     echo '<li><span class="icon12 typ-icon-pin blue"></span>Nenhum aniversariante.</li>';
                 }
                 
+                
+                echo '<li><span class="icon12 typ-icon-arrow-right-2 blue"></span>'. $this->Html->link( 'Ver todos', array('controller' => 'usuarios' , 'action' => 'aniversariantes'), array('title'=>'Perfil')) .'</span></li>';
                 //debug($aniversariantes); ?>  
                 </ul>
                 

@@ -93,6 +93,15 @@ $this->Html->addCrumb( $this_page );
                                 $('#select_gerente').show().addClass('required');
                             }
                         }).trigger('change');
+                        
+                        $('#GrupoCadastroForm').submit(function(){
+                            if (($('#GrupoParentId').val()!='') && ($('#box_usuarios').find('input[type="checkbox"]:checked').length==0) ) {
+                                $('#box_usuarios').find('div.lista_opcoes_checkbox').addClass('error');
+                                dialog('Erro', 'Necessário escolher usuários do grupo.');
+                                return false;
+                            } else { $('#box_usuarios').find('div.lista_opcoes_checkbox').removeClass('error'); }
+                            return true;
+                        });
                     });
                     </script>
                     
